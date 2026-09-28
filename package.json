@@ -1,0 +1,16 @@
+{
+  "name": "mishnah-atlas",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test",
+    "data:download": "python3 scripts/download_mishnah.py"
+  },
+  "devDependencies": {
+    "vite": "^7.1.0"
+  }
+}
