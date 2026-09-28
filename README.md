@@ -19,12 +19,16 @@ Open http://localhost:5173. `npm run build` creates a static site in `dist/`; `n
 - Optional exclusion of a documented set of common particles / reporting words
 - Search the tractate library and select an order or tractate without leaving the workspace
 - Click a word to read highlighted source passages beside the frequency list; on phones, use the passage view and Word list back button
+- Per-word order distribution, corpus share, tractate spread, neighboring and co-occurring forms, and Prev/Next walk through the ranked list
+- Arrow-key navigation through the word list, `/` focuses search, Random form and Random passage buttons
+- Selection statistics with order breakdown, top forms, average length, diversity, copyable summary, and longest-passage reader link
 - Open all matches in the reader, or browse its tractate directory
-- Sort tractates by word count, vocabulary, average passage length, or name
+- Sort tractates by word count, vocabulary, forms used once, diversity, average passage length, or name; sortable column headings and an orders summary table
+- Matches-per-chapter histogram, adjustable Hebrew text size (remembered), and chapter navigation in the reader
 - Read the longest passage and compare the six orders using aligned bars
 - Hebrew reader with highlighted exact word / phrase matches, chapter navigation, and direct page jumps in both the reader and word lists
 - Bookmarkable filters and searches, browser Back/Forward support, and a copy-link button
-- Download the full text, attributed JSON corpus, or filtered frequency CSV
+- Download the full text, attributed JSON corpus, or filtered frequency CSV (now with corpus-share column) and compare-table CSV
 
 ## Data and attribution
 

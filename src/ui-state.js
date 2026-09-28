@@ -19,7 +19,7 @@ export function readState(search, books) {
   for (const [key, values] of Object.entries({
     view: ["overview", "words", "tractates", "reader"],
     mode: ["common", "rare", "phrases"],
-    sort: ["total", "unique", "average", "name"],
+    sort: ["total", "unique", "average", "hapax", "diversity", "name"],
   })) {
     if (values.includes(p.get(key))) state[key] = p.get(key);
   }

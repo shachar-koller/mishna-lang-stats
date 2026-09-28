@@ -79,3 +79,26 @@ test('Search highlights the exact original vocalized words, including overlappin
  assert.deepEqual(matchingRanges(text,'abc'),[]);
  assert.deepEqual(matchingRanges('א א א','א א'),[[0,5]]);
 });
+test('Occurrences, collocates, chapter hits, and diversity describe a selection',async()=>{
+  const {occurrences,collocates,chapterHits,diversity,phrases:ph}=await import('../src/analytics.js');
+  const b=prepare([
+    {title:'A',order:'Zeraim',chapters:[['רבי יהודה אומר שבת','יהודה אומר רבי']]},
+    {title:'B',order:'Moed',chapters:[['רבי שבת שבת']]},
+  ]);
+  const a=analyze(b);
+  assert.deepEqual(occurrences(a.passages,'רבי'),{hits:3,passages:3});
+  assert.deepEqual(occurrences(a.passages,''),{hits:0,passages:0});
+  const co=collocates(a.passages,'רבי',5);
+  assert.ok(co.after.some(([w])=>w==='יהודה'));
+  assert.ok(co.before.some(([w])=>w==='אומר'));
+  assert.ok(!co.together.some(([w])=>w==='רבי'));
+  assert.deepEqual(collocates(a.passages,'',5),{before:[],after:[],beside:[],together:[]});
+  const rows=chapterHits(b[0].passages,'רבי');
+  assert.equal(rows.length,1);
+  assert.equal(rows[0].matched,2);
+  assert.ok(diversity(a)>0&&diversity(a)<1);
+  assert.equal(diversity({total:0,unique:0}),0);
+  assert.equal(ph(a.passages,3).find(x=>x[0]==='רבי יהודה אומר')?.[1],1);
+  assert.equal(b[0].passages[0].order,'Zeraim');
+  assert.equal(b[0].passages[0].tract,'A');
+});

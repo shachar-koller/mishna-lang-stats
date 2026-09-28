@@ -26,3 +26,10 @@ test('Selected word passages survive shared URLs without replacing either search
  assert.equal(new URLSearchParams(stateURL(cleared).slice(1)).has('entry'),false);
  assert.deepEqual(readState(stateURL(cleared),books),cleared);
 });
+test('Compare sorts for rare vocabulary round-trip; unknown sorts recover',()=>{
+  for (const sort of ['hapax','diversity']) {
+    const state={...defaults,view:'tractates',sort};
+    assert.deepEqual(readState(stateURL(state),books),state);
+  }
+  assert.equal(readState('?view=tractates&sort=bad',books).sort,'total');
+});
