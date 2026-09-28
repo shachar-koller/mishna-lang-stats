@@ -17,7 +17,9 @@ Open http://localhost:5173. `npm run build` creates a static site in `dist/`; `n
 - Common adjacent two-word phrases
 - Filter by any of the six orders or 63 tractates
 - Optional exclusion of a documented set of common particles / reporting words
-- Click a word to see source passages and open all results in the reader
+- Search the tractate library and select an order or tractate without leaving the workspace
+- Click a word to read highlighted source passages beside the frequency list; on phones, use the passage view and Word list back button
+- Open all matches in the reader, or browse its tractate directory
 - Sort tractates by word count, vocabulary, average passage length, or name
 - Read the longest passage and compare the six orders using aligned bars
 - Hebrew reader with highlighted exact word / phrase matches, chapter navigation, and direct page jumps in both the reader and word lists

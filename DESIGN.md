@@ -1,14 +1,24 @@
 # Mishnah Atlas interface
 
-This is a Hebrew concordance and corpus reader. Put words and passages ahead of summary statistics.
+A dense, minimal reference site. The central task is finding a Hebrew form and reading its source passages without losing the word list.
 
-Design guidance: [Anti-AI-Slop skill](https://github.com/Krirox/anti-ai-slop-skills/blob/main/SKILL.md), consulted September 28, 2026. Applied its documentary/data-dense direction, clear hierarchy, concrete copy, and restrained controls.
+## Structure
 
-- Use a broad word-list column with a narrow supporting column for corpus counts and orders. On mobile, put the supporting material after the list.
-- Use serif headings and Hebrew entries, system sans-serif controls, and tabular numbers. Keep fonts local/system-provided.
-- Use warm white, dark ink, and a single rust accent for selection and actions. Frequency bars are neutral; their length conveys quantity.
-- Use rules and spacing to group content. Avoid stat cards, decorative illustrations, gradients, and promotional hero sections.
-- Keep filters labeled, selected tabs visibly underlined, and keyboard focus visible. Preserve Hebrew direction and exact search highlighting.
-- State what counts mean. Keep source attribution, counting methodology, empty states, and downloads accessible.
+- Three views: Words, Reader, Compare. Existing Overview and Words URLs both open the word workspace.
+- A searchable library groups all 63 tractates by order. Text selection stays consistent across views. Whole Mishnah and Clear selection reset scope.
+- Words has a search field, frequency modes, and a common-word exclusion toggle. A compact list and a source pane scroll independently; pagination remains visible.
+- Selecting a word updates the source pane and URL. Eight passages are previewed; the reader provides all results with pagination.
+- On narrow screens, the library is toggleable and selecting a word opens a passage view with a Word list back button. The full reader keeps search and chapter controls above the text.
+- Reader starts with a tractate directory. Selecting a tractate opens its text; Hebrew searches also work across the full corpus.
+- Compare is an actual table with sortable metrics and direct links to reading or word analysis.
+- Corpus statistics and downloads live in the library. Methodology stays accessible from the header.
 
-Validation: production build, existing analytics/state tests, and browser checks of desktop/mobile layout, filters, word details, reader search, empty results, and the tractate table.
+## Visual rules
+
+White and neutral gray, dark text, a restrained blue selection color. System sans-serif for navigation and counts; local Hebrew serif fallbacks for source text. Small corner radii only on controls. Compact rows, tabular numerals, visible column labels, minimal borders. No hero, decorative stat strip, card grid, large marketing headings, or decorative imagery.
+
+## Interaction and accessibility
+
+Use real links for navigation, labeled search fields, buttons for actions, visible keyboard focus, native disclosure controls, and a skip link. Preserve Hebrew direction, vowels, and exact-match highlighting. Empty searches explain how to recover. Source attribution, downloads, copyable URLs, and browser history remain available.
+
+Earlier anti-generic design research: [Anti-AI-Slop skill](https://github.com/Krirox/anti-ai-slop-skills/blob/main/SKILL.md). The user's explicit preference for a dense, minimal reference site takes precedence over the earlier editorial direction.

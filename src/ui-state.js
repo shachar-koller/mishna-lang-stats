@@ -6,6 +6,7 @@ export const defaults = {
   mode: "common",
   hide: false,
   word: "",
+  entry: "",
   text: "",
   chapter: 0,
   sort: "total",
@@ -14,7 +15,7 @@ export const defaults = {
 export function readState(search, books) {
   const p = new URLSearchParams(search);
   const state = { ...defaults };
-  for (const key of ["word", "text"]) state[key] = p.get(key) || "";
+  for (const key of ["word", "text", "entry"]) state[key] = p.get(key) || "";
   for (const [key, values] of Object.entries({
     view: ["overview", "words", "tractates", "reader"],
     mode: ["common", "rare", "phrases"],

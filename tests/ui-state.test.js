@@ -19,3 +19,10 @@ test('Invalid URL filters, chapters, and pagination recover to usable defaults',
  assert.equal(readState('?page=Infinity',books).page,100000);
  assert.equal(stateURL(defaults),'/');
 });
+test('Selected word passages survive shared URLs without replacing either search',()=>{
+ const state={...defaults,view:'words',order:'Moed',word:'שבת',entry:'בשבת',text:'רבי יהודה',page:2};
+ assert.deepEqual(readState(stateURL(state),books),state);
+ const cleared={...state,entry:''};
+ assert.equal(new URLSearchParams(stateURL(cleared).slice(1)).has('entry'),false);
+ assert.deepEqual(readState(stateURL(cleared),books),cleared);
+});
