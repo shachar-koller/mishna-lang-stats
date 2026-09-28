@@ -2,6 +2,8 @@
 
 A clean, responsive web app for exploring the complete Hebrew Mishnah. The corpus is included locally: **63 tractates, 525 chapters, 4,192 passages, 192,574 word tokens** in the downloaded edition.
 
+Live at https://shachar-koller.github.io/mishna-lang-stats/.
+
 ## Run
 
 ```sh
@@ -58,3 +60,14 @@ HTML and annotated footnotes are removed in the import. Tokenization removes Heb
 `npm test` checks token normalization, exact search, phrase boundaries, vocalized highlight ranges, URL-state round trips and validation, statistical totals, and all 63 tractates. `npm run build` checks the production bundle. Snapshot structural totals in the corpus test intentionally flag edition changes after a refresh.
 
 Built with vanilla JavaScript and Vite. Analysis runs in the browser; no user data is sent to a server.
+
+## Deploy
+
+The site is served from the `gh-pages` branch via Settings → Pages. To republish after changing `main`:
+
+```sh
+npm run build && touch dist/.nojekyll
+git checkout --orphan gh-pages-tmp  # or reuse a clean clone
+```
+
+then replace the branch contents with `dist/` and force-push `gh-pages`. For automatic deploys on every push, replace this with a standard Vite GitHub Actions workflow (build, upload `dist` as a Pages artifact, deploy) and switch the Pages source to GitHub Actions.
