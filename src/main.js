@@ -302,7 +302,7 @@ function wordResults(full) {
       Math.max(0, Math.ceil(list.length / count) - 1),
     );
   const page = full ? state.page : 0,
-    max = Math.max(...list.slice(0, 1).map((w) => w[1]), 1),
+    max = list.reduce((max, [, count]) => Math.max(max, count), 1),
     shown = list.slice(page * count, (page + 1) * count);
   return `<div class="table-caption" id="results-start" tabindex="-1"><span>${full ? `${fmt(list.length)} ${state.mode === "phrases" ? "phrases" : "word forms"}` : "Word"}</span><span>Occurrences</span></div>
  <div class="word-list">${shown.map(([w, n], i) => `<button class="word-row" data-word="${esc(w)}" aria-label="${esc(w)}, ${fmt(n)} ${n === 1 ? "occurrence" : "occurrences"}; read passages"><span class="rank">${page * count + i + 1}</span><span class="he-word" lang="he" dir="rtl">${esc(w)}</span><span class="frequency-bar" aria-hidden="true"><span style="width:${Math.max(1, (n / max) * 100)}%"></span></span><span class="frequency-count">${fmt(n)}</span><span class="row-arrow" aria-hidden="true">↗</span></button>`).join("") || emptyState("No matching words", tokenize(state.word).length ? "Try a shorter spelling, include common particles, or change your filters." : "Enter Hebrew letters to filter the word list.", "Clear word search", "clear-query")}</div>
@@ -314,7 +314,7 @@ function emptyState(title, description, label, id) {
 }
 function pagination(total, count = 20) {
   const pages = Math.max(1, Math.ceil(total / count));
-  return `<div class="pagination"><span>${total ? fmt(state.page * count + 1) : 0}–${fmt(Math.min((state.page + 1) * count, total))} of ${fmt(total)}</span><div>${action("← Previous", `data-page="${state.page - 1}" ${state.page === 0 ? "disabled" : ""}`, "button")}<span>Page ${state.page + 1} of ${fmt(pages)}</span>${action("Next →", `data-page="${state.page + 1}" ${state.page + 1 >= pages ? "disabled" : ""}`, "button")}</div></div>`;
+  return `<div class="pagination"><span>${total ? fmt(state.page * count + 1) : 0}–${fmt(Math.min((state.page + 1) * count, total))} of ${fmt(total)}</span><div>${action("← Previous", `data-page="${state.page - 1}" ${state.page === 0 ? "disabled" : ""}`, "button")}${pages > 1 ? `<form id="page-jump" class="page-jump"><label for="page-number">Page</label><input id="page-number" name="page" type="number" inputmode="numeric" min="1" max="${pages}" step="1" required value="${state.page + 1}" aria-describedby="page-total"><span id="page-total">of ${fmt(pages)}</span><button class="button" type="submit">Go</button></form>` : "<span>Page 1 of 1</span>"}${action("Next →", `data-page="${state.page + 1}" ${state.page + 1 >= pages ? "disabled" : ""}`, "button")}</div></div>`;
 }
 function tractates() {
   const rows = scope
@@ -450,6 +450,16 @@ function exportWords() {
   );
 }
 function bindResults() {
+  const pageJump = $("#page-jump");
+  if (pageJump)
+    pageJump.onsubmit = (e) => {
+      e.preventDefault();
+      if (!pageJump.reportValidity()) return;
+      go(
+        { page: $("#page-number").valueAsNumber - 1 },
+        { focus: "results-start" },
+      );
+    };
   document
     .querySelectorAll("[data-word]")
     .forEach((b) => (b.onclick = () => wordDetail(b.dataset.word)));

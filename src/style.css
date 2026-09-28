@@ -588,8 +588,25 @@ footer .text-button {
 }
 .pagination > div {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 13px;
+}
+.page-jump {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.page-jump input {
+  width: 72px;
+  min-height: 39px;
+  padding: 8px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 5px;
 }
 .pagination .button {
   min-height: 39px;
@@ -1343,6 +1360,11 @@ dialog::backdrop {
   .pagination > div {
     width: 100%;
     justify-content: space-between;
+  }
+  .pagination .page-jump {
+    order: 1;
+    flex-basis: 100%;
+    justify-content: center;
   }
   .pagination > div > span {
     font-size: 11px;

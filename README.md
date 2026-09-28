@@ -20,7 +20,7 @@ Open http://localhost:5173. `npm run build` creates a static site in `dist/`; `n
 - Click a word to see source passages and open all results in the reader
 - Sort tractates by word count, vocabulary, average passage length, or name
 - Read the longest passage and compare the six orders using aligned bars
-- Hebrew reader with highlighted exact word / phrase matches, chapter navigation, and pagination
+- Hebrew reader with highlighted exact word / phrase matches, chapter navigation, and direct page jumps in both the reader and word lists
 - Bookmarkable filters and searches, browser Back/Forward support, and a copy-link button
 - Download the full text, attributed JSON corpus, or filtered frequency CSV
 
