@@ -151,12 +151,12 @@ function updateNavigation() {
 }
 function storeURL(replace = false) {
   updateNavigation();
-  const url = stateURL(state);
+  const target = new URL(stateURL(state), location.href);
   if (
     location.pathname + location.search !==
-    (url.startsWith("?") ? "/" + url : url)
+    target.pathname + target.search
   )
-    history[replace ? "replaceState" : "pushState"](null, "", url);
+    history[replace ? "replaceState" : "pushState"](null, "", target.pathname + target.search);
 }
 function go(changes, { focus = "heading", replace = false } = {}) {
   if (["order", "tractate", "mode", "hide", "word", "page"].some(key => key in changes)) changes = { entry: "", ...changes };
@@ -172,7 +172,7 @@ function go(changes, { focus = "heading", replace = false } = {}) {
 }
 async function init() {
   try {
-    const res = await fetch("/data/mishnah.json");
+    const res = await fetch(`${import.meta.env.BASE_URL}data/mishnah.json`);
     if (!res.ok) throw Error("The local corpus file could not be loaded. Reload to try again.");
     corpus = await res.json();
     books = prepare(corpus.tractates);
@@ -195,7 +195,7 @@ async function init() {
 function shell() {
   $("#app").innerHTML = `<a class="skip-link" href="#content">Skip to content</a>
   <header class="app-header">
-    <a class="brand" href="/" data-nav><span lang="he">משנה</span><strong>Mishnah Atlas</strong></a>
+    <a class="brand" href="./" data-nav><span lang="he">משנה</span><strong>Mishnah Atlas</strong></a>
     <nav aria-label="Main navigation">${[["overview", "Words"], ["reader", "Reader"], ["tractates", "Compare"]].map(([view, label]) => `<a data-view="${view}" data-nav href="${stateURL({...defaults, view})}">${label}</a>`).join("")}</nav>
     <button id="method" class="text-button">About &amp; sources</button>
   </header>
@@ -207,7 +207,7 @@ function shell() {
       <div id="library-tree"></div>
       <p id="library-empty" class="library-empty" hidden>No matching tractates.</p>
       <div class="library-bottom"><button id="stats-toggle" class="text-button" aria-expanded="false" aria-controls="scope-stats">Selection statistics <span aria-hidden="true">+</span></button><div id="scope-stats" hidden></div>
-      <div class="downloads"><a href="/data/mishnah.txt" download>Download text</a><a href="/data/mishnah.json" download>JSON</a></div></div>
+      <div class="downloads"><a href="data/mishnah.txt" download>Download text</a><a href="data/mishnah.json" download>JSON</a></div></div>
     </aside>
     <main id="main">
       <div class="scope-bar"><button id="library-toggle" class="button" aria-expanded="false" aria-controls="library">Library</button><div class="scope-title"><h1 id="heading" tabindex="-1"></h1><span id="scope-count"></span></div><button id="reset-scope" class="text-button">Clear selection</button><button id="copy-link" class="text-button">Copy link</button></div>
@@ -618,7 +618,7 @@ function bind() {
 function method() {
   modal(
     "How the text is counted",
-    `<div class="method-copy"><p>These counts cover 63 Hebrew tractates of the Mishnah from Sefaria’s public export, without commentaries. The edition includes a few chapters the source supplies beyond the printed Mishnah, such as Avot 6 and Bikkurim 4, and the totals reflect that.</p><h3>Counting</h3><p>Vowel and cantillation marks are stripped before counting. A word is any run of Hebrew letters; punctuation and hyphens split words. Prefixes stay attached, so this counts written forms rather than roots or meanings. Phrases are adjacent word pairs inside one mishnah.</p><p>“Exclude common words” removes the particles and reporting words listed below from word lists and exports. The totals always describe the full selection.</p><details><summary>Excluded words</summary><p lang="he" dir="rtl">${[...stopWords].join(" · ")}</p></details><h3>Sources</h3><p>Source export ${new Date(corpus.exportDate).toLocaleDateString("en-GB")}, merged ${new Date(corpus.downloadedAt).toLocaleDateString("en-GB")}. <a href="/data/mishnah.json" download>Full JSON with attribution</a> · <a href="/data/mishnah.txt" download>Plain Hebrew text</a></p></div>`,
+    `<div class="method-copy"><p>These counts cover 63 Hebrew tractates of the Mishnah from Sefaria’s public export, without commentaries. The edition includes a few chapters the source supplies beyond the printed Mishnah, such as Avot 6 and Bikkurim 4, and the totals reflect that.</p><h3>Counting</h3><p>Vowel and cantillation marks are stripped before counting. A word is any run of Hebrew letters; punctuation and hyphens split words. Prefixes stay attached, so this counts written forms rather than roots or meanings. Phrases are adjacent word pairs inside one mishnah.</p><p>“Exclude common words” removes the particles and reporting words listed below from word lists and exports. The totals always describe the full selection.</p><details><summary>Excluded words</summary><p lang="he" dir="rtl">${[...stopWords].join(" · ")}</p></details><h3>Sources</h3><p>Source export ${new Date(corpus.exportDate).toLocaleDateString("en-GB")}, merged ${new Date(corpus.downloadedAt).toLocaleDateString("en-GB")}. <a href="data/mishnah.json" download>Full JSON with attribution</a> · <a href="data/mishnah.txt" download>Plain Hebrew text</a></p></div>`,
   );
 }
 init();

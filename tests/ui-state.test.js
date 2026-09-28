@@ -17,7 +17,7 @@ test('Invalid URL filters, chapters, and pagination recover to usable defaults',
  assert.equal(readState('?tractate=Berakhot&chapter=10',books).chapter,0);
  assert.equal(readState('?tractate=Berakhot&chapter=2.5',books).chapter,0);
  assert.equal(readState('?page=Infinity',books).page,100000);
- assert.equal(stateURL(defaults),'/');
+  assert.equal(stateURL(defaults),'./');
 });
 test('Selected word passages survive shared URLs without replacing either search',()=>{
  const state={...defaults,view:'words',order:'Moed',word:'שבת',entry:'בשבת',text:'רבי יהודה',page:2};

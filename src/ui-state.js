@@ -51,5 +51,5 @@ export function stateURL(state) {
     if (key in defaults && value !== defaults[key])
       p.set(key, key === "hide" ? "1" : String(value));
   }
-  return p.size ? `?${p}` : "/";
+  return p.size ? `?${p}` : "./";
 }
